@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Bar Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #barChart {
+            width: 300mm; 
+            height: 300mm; 
+            display: block;
+            margin: 0 auto;
+            align-content: center;
+        }
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <h1>MONTHLY DATA</h1>
+    <canvas id="barChart" ></canvas>
+
+    <
+    <script>
+        var zippedData = {{ zipped_data_json|safe }};
+        
+        
+        var labels = zippedData.map(function(pair) { return pair[0]; });
+        var values = zippedData.map(function(pair) { return parseFloat(pair[1]); });
+
+        
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Expense',
+                    data: values,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                responsive: false, 
+                
+            }
+        });
+    </script>
+</body>
+</html>

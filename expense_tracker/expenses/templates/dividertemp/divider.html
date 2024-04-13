@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Calculator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+ 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .expense-container {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  margin: 20px auto 0;
+}
+
+  .expense-container h1 {
+    margin-bottom: 20px;
+    color: #610663;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group select, .form-group input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline: none;
+  }
+  .form-group select:focus, .form-group input:focus {
+    border-color: #610663;
+  }
+  .btn {
+    background-color: #610663;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    max-width: 200px;
+    margin: auto;
+    display: block;
+  }
+  .btn:hover {
+    background-color:#610663;
+  }
+  #result {
+    margin-top: 20px;
+    color: #610663;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #610663;
+    color: #fff;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
+</head>
+<body>
+  {% include 'header.html' %}
+<div class="expense-container">
+  <h1>Expense Divider</h1>
+  <form id="expenseForm"  method="post" action="{% url 'divider' %}">
+    {% csrf_token %}>
+    <div class="form-group">
+      <select id="category" name="category" required>
+        <option value="" disabled selected>Select Category</option>
+        <option value="Travel">Travel Cost</option>
+        <option value="Food">Food</option>
+        <option value="Accommodation">Accommodation</option>
+        <option value="EntryFee">Entry Fee</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="number" id="amount" name="amount" placeholder="Amount ($)" min="0" required>
+    </div>
+    <div class="form-group">
+      <input type="number" id="numberOfPersons" name="numberOfPersons" placeholder="Number of Persons" min="1" required>
+    </div>
+    <button type="submit" class="btn">Add Expense</button>
+  
+  <div id="result"></div>
+  <table id="expenseTable">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Per Person Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2" style="text-align:right;">Total per Person:</td>
+        <td id="totalPerPerson"></td>
+      </tr>
+    </tfoot>
+  </table>
+  </form>
+  
+</div>
+
+<script>
+document.getElementById("expenseForm").addEventListener("submit", function(event){
+  event.preventDefault();
+  var category = document.getElementById("category").value;
+  var amount = parseFloat(document.getElementById("amount").value);
+  var numberOfPersons = parseInt(document.getElementById("numberOfPersons").value);
+  
+  if (category && amount && numberOfPersons) {
+    var perPersonCost = amount / numberOfPersons;
+    document.getElementById("result").innerHTML = "<p>The per person cost for " + category + " is $" + perPersonCost.toFixed(2) + "</p>";
+ 
+    var table = document.getElementById("expenseTable").getElementsByTagName('tbody')[0];
+    var newRow = table.insertRow(table.rows.length);
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+    cell1.innerHTML = category;
+    cell2.innerHTML = "$" + amount.toFixed(2);
+    cell3.innerHTML = "$" + perPersonCost.toFixed(2);
+    
+ 
+    var totalPerPerson = calculateTotalPerPerson();
+    document.getElementById("totalPerPerson").innerHTML = "$" + totalPerPerson.toFixed(2);
+  } else {
+    document.getElementById("result").innerHTML = "<p>Please fill in all fields.</p>";
+  }
+});
+
+function calculateTotalPerPerson() {
+  var sum = 0;
+  var rowCount = document.getElementById("expenseTable").getElementsByTagName('tbody')[0].rows.length;
+  for (var i = 0; i < rowCount; i++) {
+    sum += parseFloat(document.getElementById("expenseTable").getElementsByTagName('tbody')[0].rows[i].cells[2].innerHTML.replace("$", ""));
+  }
+  return sum;
+}
+</script>
+</body>
+</html>

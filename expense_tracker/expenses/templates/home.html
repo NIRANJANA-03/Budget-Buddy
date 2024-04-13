@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Budget Buddy</title>
+  <style>
+    /* Add your CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background-color: #610663;
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+    }
+    .main-content {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-gap: 20px;
+    }
+    .grid-item {
+      padding: 20px;
+      border-radius: 5px;
+      position: relative;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+    }
+    .highlight {
+      background-color: #f0f0f0;
+    }
+    .read-more-btn {
+      background-color: #610663;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: 2px solid #610663; /* Add border for better visibility */
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add smooth transition */
+      align-self: flex-end; /* Align button to the bottom-right corner */
+    }
+
+    .read-more-btn:hover {
+      background-color: #0056b3; /* Darker shade on hover */
+      border-color: #0056b3; /* Darker border on hover */
+    }
+    h1 {
+      text-align: right;
+      font-size: 24px; 
+      margin-top: 20px;
+    }
+    .custom-color-1 {
+  background-color: #ffcccc; /* Custom color for Expense Tracking */
+}
+
+.custom-color-2 {
+  background-color: #ccffcc; /* Custom color for Tour Tracking */
+}
+
+.custom-color-3 {
+  background-color: #ccccff; /* Custom color for Divider */
+}
+.custom-color-4 {
+  background-color: #fae19e; /* Custom color for Monthly Comparison */
+}
+
+.custom-color-5 {
+  background-color: #fab58d; /* Custom color for Monthly Report */
+}
+
+  </style>
+</head>
+<body>
+  {% include 'header.html' %}
+  <div class="header">
+    <h1>Welcome to Budget Buddy, {{ request.user.username }}!</h1>
+  </div>
+
+  <!-- Main Content Grid -->
+  <h2>Overview</h2>
+  <div class="main-content">
+    <div class="grid-item expense-item custom-color-1">
+      <h2>Expense Tracking</h2>
+      <p>Total expenses this month, categories with the highest spending, any outstanding bills, etc.</p>
+      <button class="read-more-btn"><a href="{% url 'expense' %}" class="read-more-btn">Read More</a></button>
+    </div>
+    <div class="grid-item tour-item custom-color-2">
+      <h2>Tour Tracking</h2>
+      <p>Upcoming tours/events, recent tour summaries, etc.</p>
+      <button class="read-more-btn"><a href="{% url 'tourm' %}" class="read-more-btn">Read More</a></button>
+    </div>
+    <div class="grid-item divider-item custom-color-3">
+      <h2>Divider</h2>
+      <p>Recent transactions or activities related to dividing expenses among group members.</p>
+      <button class="read-more-btn"><a href="{% url 'divider' %}" class="read-more-btn">Read More</a></button>
+    </div>
+  </div>
+  
+</div>
+<h2>Highlights</h2>
+<div class="main-content">
+  <!-- Monthly Comparison Grid -->
+  <div class="grid-item highlight custom-color-4">
+    <h2>Monthly Comparison</h2>
+    <p>Add your content for monthly comparison here</p>
+    <button class="read-more-btn"><a href="{% url 'bar' %}" class="read-more-btn">Read More</a></button>
+  </div>
+
+  <!-- Monthly Report Grid -->
+  <div class="grid-item highlight custom-color-5">
+    <h2>Monthly Report</h2>
+    <p>Add your content for monthly report here</p>
+    <button class="read-more-btn"><a href="{% url 'chart' %}" class="read-more-btn">Read More</a></button>
+  </div>
+</div>
+
+
+  <!-- Additional Sections -->
+  <div>
+    <h2>Profile Settings</h2>
+    <p>Allow users to manage their account settings, preferences, or billing information if applicable.</p>
+  </div>
+  <div>
+    <h2>Need Help?</h2>
+    <p>If you encounter any issues or have questions, please don't hesitate to reach out to our support team.</p>
+    <p>For immediate assistance, you can:</p>
+    <ul>
+      <li><a href="https://www.example.com/support">Visit our support page</a></li>
+      <li>Contact us via email at support@example.com</li>
+      <li>Call our support hotline at +1-800-123-4567</li>
+    </ul>
+  </div>
+</body>
+</html>
+

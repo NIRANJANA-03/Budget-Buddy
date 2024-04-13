@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .input-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .input-section label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .input-section input[type="number"],
+        .input-section input[type="month"] {
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .input-section button {
+            padding: 5px 10px;
+            background-color: #610663;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .report-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #610663;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .expenses-list {
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #610663;
+            color: white;
+        }
+
+        tfoot td {
+            font-weight: bold;
+        }
+        
+        #category {
+            width: 200px;
+        }
+        
+        #close-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #610663;
+            color: #fff;
+        }
+        .close {
+    margin-top: 100px; /* Adjust this value as needed */
+        }
+        .closing-box {
+        background-color: #cac9ca; /* Red background color, you can adjust this */
+        border: 1px solid #f3e2e2; /* Red border color, you can adjust this */
+        padding: 10px; /* Padding around the text */
+        margin-top: 10px;
+        text-align: center; /* Add some space between the button and the box */
+        }
+
+    </style>
+    <title>Expense Tracker</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    <h1>Expense Tracker</h1>
+    <form id="expense-form" method="post" action="{% url 'expense' %}">
+        {% csrf_token %}
+        <div class="input-section">
+            <label for="date-input">Month and Year:</label>
+            <input type="date" id="date-input" name="month_year">
+
+            <label for="category-select">Category:</label>
+            <select name="category">
+                {% for category in  categories_with_zero_expense %}
+                    {% if category != 'savings' and category != 'miscellaneous' and category != 'remaining' %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            
+            <label for="amount-input">Amount:</label>
+            <input type="number" id="amount-input" name="amount">
+
+            <input type="hidden" name="action" value="Add">
+            <button type="submit" id="add-btn" name="action" value="Add">Add</button>    
+
+            <button class="report-btn"><a href="{% url 'chart' %}" class="report-btn">Report</a></button>
+        </div>
+    
+    <div class="expenses-list">
+        <h2>Expenses List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.category }}</td>
+                        <td>{{ expense.cat_expense }}</td>
+                        <td>{{ expense.month_year }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tbody id="expense-table-body"></tbody>
+            <tfoot>
+                <tr>
+                    <td>Total Expense:</td>
+                    <td>{{ total_expense_amount }}</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        {% if remaining_category %}
+        <div>
+            <h2>Remaining Expenses</h2>
+            <p>Category: {{ remaining_category.category }}</p>
+            <p>Amount: {{ remaining_category.cat_expense }}</p>
+            <!-- Add any additional information you want to display -->
+        </div>
+        {% endif %}
+    </div>
+
+    </form>
+    <h1>CLOSING THE MONTH </h1>
+        <form id="" method="post" action="{% url 'expense' %}">
+            {% csrf_token %}
+            <div class="closing-box">
+                <p>WHEN YOU CLOSE A MONTH,</p>
+                <p>THE EDITING ACCESS OF A MONTH IS CLOSED</p>
+                <p>THE AMOUNT REMAINED IN THAT MONTH WILL BE DIVIDED IN TO HALF.</p>
+                <p>ONE HALF WILL BE ADDED WITH THE SAVING OF THE GIVEN MONTH.</p>
+                <p>THE OTHER HALF TO THE EMERGENCY FUND.</p>
+                <p>YOU CAN CHECK THE DETAILS OF THE MONTH IN REPORT SECTION .</p>
+            </div>
+            <div class="close">
+                <label for="date-input">Month and Year:</label>
+                <input type="date" id="date-input" name="month_year">
+            
+                <input type="hidden" name="action" value="close">
+                <button type="submit" id="close-btn" name="action" value="close">Close</button>    
+            </div>  
+          
+        </form>
+        
+   
+</body>
+</html>

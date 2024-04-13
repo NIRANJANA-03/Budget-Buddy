@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Project Name</title>
+    <style>
+        /* Add your existing styles here */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            height: 2cm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            background-color: #610663; 
+        }
+
+        .logo-and-name {
+            display: flex; /* Use flexbox layout */
+            align-items: center; /* Center vertically */
+        }
+
+        .logo {
+            margin-right: 20px; /* Add margin between the logo and project name */
+        }
+
+        .project-name h1 {
+            color: white; 
+            margin: 0; /* Remove default margins */
+        }
+
+        .nav-links ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .nav-links li:last-child {
+            margin-right: 0;
+        }
+
+        .nav-links a {
+            color: white; 
+            text-decoration: none;
+        }
+        
+        .logo-image {
+            width: 1.5cm; /* Adjust width as needed */
+            height: auto; /* Allow height to adjust proportionally */
+            padding: 0.2cm; /* Add padding around the image */
+        }
+    </style>
+</head>
+<body>
+    
+    {% load static %}
+    <header class="header">
+        <div class="logo-and-name">
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo-image">
+            </div>
+            <div class="project-name">
+                <h1>BUDGET BUDDY {{ request.user.username }}!</h1>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="{% url 'expense' %}">Expense Tracking</a></li>
+                <li><a href="{% url 'divider' %}">Divider</a></li>
+                <li><a href="{% url 'tourm' %}">Tour</a></li>
+                <li><a href="{% url 'income' %}">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+</body>
+</html>

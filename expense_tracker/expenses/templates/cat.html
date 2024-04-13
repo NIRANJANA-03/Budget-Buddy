@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Tracker</title>
+    <style>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-size: cover ;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #080808;
+        }
+        .expense-section {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #610663;
+            border: none;
+            color: white; 
+            padding: 15px 32px; 
+            text-align: center; 
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; 
+            margin: 4px 2px; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            }
+
+
+        button:hover {
+            background-color: #610663;
+        }
+
+        #expense-category {
+            width: 100%;
+        }
+        .next-button-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+    </style>    
+</head>
+<body>
+    {% include 'header.html' %}
+
+<div class="container">
+    <div class="income-section">
+        <!-- Inside your template, cat.html -->
+        {% if messages %}
+            <div class="alert alert-warning" role="alert">
+            {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+            </div>
+        {% endif %}
+        <h1>Category Section</h1>
+<form id="expenseForm" method="post" action="{% url 'cat' %}">
+    {% csrf_token %}
+    <div class="expense-section">
+    
+        
+        <label for="new-expense-category">New Expense Category:</label>
+        <input type="text" id="new-expense-category" name="new-expense-category" placeholder="Enter new expense category">
+        
+        <label for="fixed-expense">Fixed Expense:</label>
+        <input type="number" id="fixed-expense" name="fixed-expense" placeholder="Enter fixed expense">
+        
+        <button type="submit" id="add-expense-category-btn">Save Category</button>
+        
+        
+        <label for="existing-expense-category">Existing Expense Category:</label>
+        <select id="existing-expense-category" name="existing-expense-category">
+            {% for category in categories %}
+                {% if category != 'savings' and category != 'miscellaneous' and category != 'remaining' %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+</form>
+
+        
+
+    </div>
+</div>
+<div class="next-button-container">
+    <a href="{% url 'home' %}">
+        <button>Next</button>
+    </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Pie Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .input-container label {
+            margin-right: 10px;
+        }
+
+        #chart-container {
+            width: 80%;
+            max-width: 800px; /* Increased max-width */
+            margin-top: 20px;
+            text-align: center; /* Center the chart container */
+        }
+
+        #expenseChart {
+            width: 100%; /* Set the chart canvas width to 100% */
+            height: auto; /* Maintain aspect ratio */
+        }
+        .legend {
+        margin-top: 20px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .legend th,
+    .legend td {
+        border: 1px solid #faefef;
+        padding: 8px;
+        text-align: left;
+    }
+    #date {
+        width: 200px;
+        height: 40px; /* Set the width of the date field */
+    }
+
+    .legend th {
+        background-color: #a3c8eb;
+    }
+
+    .legend tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .legend tr:hover {
+        background-color: #ddd;
+    }
+    .big-button {
+        background-color: #610663; /* Green */
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 10px; /* Adjust margin as needed */
+        cursor: pointer;
+        margin-right: 10px;
+        width: 300px;
+    }
+
+    .big-button:hover {
+        background-color: #610663; /* Darker green */
+    }
+    #date {
+        margin-right: 10px; 
+        width: 200px;
+        height: 30px; 
+    }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="container">
+        <div class="heading"><h1>PIE CHART REPORT</h1></div>
+        {% if message %}
+            <div class="message" style="text-align: center; color: red;">{{ message }}</div>
+        {% endif %}
+    
+        <form id="bodyy" method="post" action="{% url 'chart' %}">
+            {% csrf_token %}
+            <div class="input-container">
+                <label for="date">Select Date:</label>
+                <input type="date" id="date" name="date">
+            </div>
+            <div>
+                <button type="submit" class="big-button">Show</button>
+            </div>
+        </form>
+
+        {% if data %}
+        <div id="chart-container">
+            <canvas id="expenseChart"></canvas>
+        </div>
+        <div><h1>TABLE</h1></div>
+        <table class="legend">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Expense</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category, amount in data %}
+                    <tr>
+                        <td>{{ category }}</td>
+                        <td>{{ amount }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    
+    </div>
+
+    <script>
+        const ctx = document.getElementById('expenseChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [{% for category, amount in data %}"{{ category }}", {% endfor %}],
+                datasets: [{
+                    data: [{% for category, amount in data %}{{ amount }}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(241, 101, 234, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 159, 64, 0.7)',
+                        'rgba(255, 0, 0, 0.7)',       // Red
+                        'rgba(0, 255, 0, 0.7)',       // Green
+                        'rgba(0, 0, 255, 0.7)',       // Blue
+                        'rgba(255, 255, 0, 0.7)',     // Yellow
+                        'rgba(255, 0, 255, 0.7)',     // Magenta
+                        'rgba(0, 255, 255, 0.7)'      // Cyan
+                        
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Expense Breakdown'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Tracker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+        }
+
+        h1 {
+            text-align: center;
+            color: #080808;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: whitesmoke;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px; 
+            height: 350px; 
+        }
+
+        .income-section {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #610663;
+            border: none;
+            color: white; 
+            padding: 15px 32px; 
+            text-align: center; 
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer; 
+            border-radius: 8px; 
+        }
+
+        button:hover {
+            background-color: #610663;
+        }
+
+        .next-button-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+<div class="container">
+    <div class="income-section">
+        <h1>Income Section</h1>
+        <form id="incomeForm" method="post" action="{% url 'income' %}">
+            {% csrf_token %}
+            <label for="income">Enter Income:</label>
+            <input type="number" id="income" name="income" required>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</div>
+<div class="next-button-container">
+    <a href="{% url 'cat' %}">
+        <button>Next</button>
+    </a>
+</div>
+</body>
+</html>
