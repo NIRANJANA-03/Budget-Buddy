@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Tour Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+            position: relative;
+        }
+        input[type="text"], input[type="number"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #610663;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            margin: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #610663;
+        }
+        #category_dropdown {
+            margin-top: 20px;
+        }
+        .section-heading {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .section-description {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <form id="add-event-form" method="post" action="{% url 'eventadd' %}">
+            {% csrf_token %}
+           
+            <h2>Add Event Details</h2>
+            <label for="event_name">Event Name:</label>
+            <input type="text" id="event_name" name="event_name">
+            
+            <label for="event_location">Event Location:</label>
+            <input type="text" id="event_location" name="event_location">
+            
+            <div class="section-description">If the event is conducted by an individual add 1 to the number of person involved and amount collected as the expected budget of the individual</div>
+            <label for="num_persons">Number of Persons involved:</label>
+            <input type="number" id="num_persons" name="num_persons">
+            
+            <label for="amount_collected">Amount collected from each person:</label>
+            <input type="number" id="amount_collected" name="amount_collected" placeholder="Enter amount">
+            
+            <div class="section-description">The person 1 and person 2 can be a person associated with the event like president who wants the report at the end. If this is an informal event, just leave it blank.</div>
+            <div class="section-heading">Person 1 Details</div>
+            <label for="president_name">Name:</label>
+            <input type="text" id="president_name" name="president_name">
+            <label for="president_email">Email:</label>
+            <input type="email" id="president_email" name="president_email">
+            
+            <div class="section-heading">Person 2 Details</div>
+            <label for="program_secretary_name">Name:</label>
+            <input type="text" id="program_secretary_name" name="program_secretary_name">
+            <label for="program_secretary_email">Email:</label>
+            <input type="email" id="program_secretary_email" name="program_secretary_email">
+            
+            <input type="submit" name="save" value="Save">
+        </form>
+    </div>
+</body>
+</html>

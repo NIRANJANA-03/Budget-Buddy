@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f5f8;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #610663;
+        }
+
+        .tour-detail {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .tour-info {
+            margin-bottom: 15px;
+        }
+
+        .read-more-container {
+            text-align: right;
+        }
+
+        .read-more-button {
+            background-color: #610663;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .read-more-button:hover {
+            background-color: #4a045a;
+        }
+
+        .add-tour-event-button {
+            background-color: #610663;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
+            text-decoration: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .add-tour-event-button:hover {
+            background-color: #4a045a;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <!-- Main content -->
+    <div class="container">
+        <h1>Tour Events</h1>
+
+        <!-- Display tour details -->
+        {% for tour_detail in tour_details %}
+        <div class="tour-detail">
+            <div class="tour-info">
+                <p>
+                    <strong>Tour Name:</strong> {{ tour_detail.tour_name }}<br>
+                    <strong>Budget:</strong> {{ tour_detail.budget }}<br>
+                    <strong>Duration:</strong> {{ tour_detail.duration }}<br>
+                    {% if tour_detail.status == 0 %}
+                        <strong>Status:</strong> Open<br>
+                    {% else %}
+                        <strong>Status:</strong> Closed<br>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="read-more-container">
+                <a href="{% url 'maintour' tour_detail.tour_name %}" class="read-more-button">Read More</a>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Add button to add a new tour event -->
+        <a href="{% url 'addtour' %}" class="add-tour-event-button">+</a>
+    </div>
+</body>
+</html>

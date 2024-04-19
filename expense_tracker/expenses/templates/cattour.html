@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Tour Category</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        max-width: 600px; 
+        margin: 20px auto;
+        position: relative; 
+        }
+        input[type="text"] ,input[type="number"]{
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #610663;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            margin: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #610663;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .savee{
+            position: fixed;
+             bottom: 20px;
+            right: 20px;   
+        }
+        #category_dropdown
+        {
+            margin-top: 20px; 
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <form id="add-tourform" method="post">
+            <h2>Add Tour Category</h2>
+            {% csrf_token %}
+            <label for="category">Add Category:</label>
+            <input type="text" id="new_category" name="category">
+            <input type="submit" value="Add Tour Category">
+        </form>
+        <select id="category_dropdown">
+            {% for category in categories %}
+                <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</body>
+</html>

@@ -5,7 +5,10 @@ import datetime
 class Income(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    emergency = models.DecimalField(max_digits=10, decimal_places=2, default=0) 
+    emergency = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    profession = models.CharField(max_length=100, blank=True, null=True)
+    savings = models.DecimalField(max_digits=10, decimal_places=2, default=0)  
+
     class Meta:
         managed = True
 
@@ -38,3 +41,52 @@ class ExpenseSummary(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.month_year}: ${self.total}"
+    
+
+class TDetails(models.Model):
+    tour_name = models.CharField(max_length=100,primary_key=True) 
+    budget = models.DecimalField(max_digits=10,decimal_places=2)
+    duration = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.IntegerField(default=0) 
+    remaining = models.DecimalField(max_digits=10,decimal_places=2,default=0) 
+    
+
+    def __str__(self):
+        return self.tour_name
+    
+class Tcat(models.Model):
+    
+    tour_name = models.CharField(max_length=100) 
+    category = models.CharField(max_length=100)
+    expense = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    
+
+    def __str__(self):
+        return f"{self.category} ---{self.tour_name}"
+    
+
+
+class DEvent(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event_name = models.CharField(max_length=100)
+    event_location = models.CharField(max_length=100)
+    num_persons = models.IntegerField()
+    president_name = models.CharField(max_length=100)
+    president_email = models.EmailField()
+    program_secretary_name = models.CharField(max_length=100)
+    program_secretary_email = models.EmailField()
+    status = models.IntegerField(default=0)
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)  
+    collected = models.DecimalField(max_digits=10, decimal_places=2, default=0)  
+
+    def __str__(self):
+        return self.event_name
+    
+class CatEvent(models.Model):
+    event_name = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
+    expense = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
+
+    def __str__(self):
+        return f"{self.event_name} - {self.category}"

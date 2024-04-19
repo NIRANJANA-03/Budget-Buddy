@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Budget Buddy</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  padding: 50px;
+}
+
+.Isection {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  width: 45%; /* Adjust width as needed */
+}
+
+.Dsection {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  width: 45%; /* Adjust width as needed */
+}
+
+form {
+  margin-top: 20px;
+}
+
+input[type="number"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+button[type="submit"] {
+  background-color: #610663;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #610663;
+}
+
+  </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+  <h1 style="color: rgb(3, 3, 3); font-size: 40px; text-align: center;">PROFILE</h1>
+  <div class="container">
+    <div class="Isection">
+      <h2>Income Details</h2>
+      {% for income in user_incomes %}
+        <p>User: {{ income.user }}</p>
+        <p>Amount: {{ income.amount }}</p>
+        <p>Emergency Fund: {{ income.emergency }}</p>
+        <p>Profession: {{ income.profession }}</p>
+        <p>Total savings : {{ income.savings}}</p>
+      {% endfor %}
+    </div>
+
+    <div class="Dsection">
+        <h2>Debit Amount</h2>
+        <form action="{% url 'profile' %}" method="post">
+            {% csrf_token %}
+            <label for="debit_amount">Enter Amount to Debit:</label>
+            <input type="number" id="debit_amount" name="debit_amount" required>
+            <button type="submit">Debit</button>
+        </form>
+        <div id="debit-message" style="background-color: #c4c1c1; padding: 10px; border: 1px solid #dadada; border-radius: 5px; margin-top: 10px; padding: 30px;">
+            You can debit amount from the emergency fund. If it's greater than the emergency fund, then the amount will be reduced from savings.
+        </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Tour Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f5f8;
+            color: #333;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 100px;
+            position: relative;
+        }
+        h1 {
+            margin-bottom: 50px;
+            text-align: center;
+            color: #000000;
+        }
+        .add-tour-event-button {
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            background-color: #610663;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .add-tour-event-button:hover {
+            background-color: #4a045a;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .event-box {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .event-info {
+            margin-bottom: 20px;
+        }
+        .read-more-button {
+            background-color: #610663;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .read-more-button:hover {
+            background-color: #4a045a;
+        }
+        .read-more-container {
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <h1>Event List</h1>
+        {% if event_details %}
+            {% for event_detail in event_details %}
+                <div class="event-box">
+                    <div class="event-info">
+                        <p>
+                            <strong>Event Name:</strong> {{ event_detail.event_name }}<br>
+                            <strong>Location:</strong> {{ event_detail.event_location }}<br>
+                            <strong>Number of Persons:</strong> {{ event_detail.num_persons }}<br>
+                            <strong>Total Collected:</strong> {{ event_detail.collected }}<br>
+                            {% if event_detail.status == 0 %}
+                                <strong>Status:</strong> Open<br>
+                            {% else %}
+                                <strong>Status:</strong> Closed<br>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="read-more-container">
+                        <a href="{% url 'divider' event_detail.event_name %}" class="read-more-button">Read More</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No events found.</p>
+        {% endif %}
+        <form method="post" action="{% url 'eventhome' %}">
+            {% csrf_token %}
+            <a href="{% url 'eventadd' %}" class="add-tour-event-button">+</a>
+        </form>
+    </div>
+</body>
+</html>

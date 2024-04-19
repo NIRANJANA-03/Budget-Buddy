@@ -28,13 +28,14 @@ SECRET_KEY = 'django-insecure-+^9ljz4#g06!zt2*!x$h%d@y99mrfbif-gef-b=0dx(2kgvbl^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['budgetbuddy.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'expenses',
+   
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -62,8 +63,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),  # Your original templates directory
-            os.path.join(BASE_DIR, 'tour', 'templates'),  # New 'tour' templates directory
-            'D:\\pro\\expense_tracker\\expenses\\templates\\dividertemp', 
+            os.path.join(BASE_DIR, 'expenses', 'templates'),
+            'D:/pro/EXPENSE-TRACKER/expense_tracker/expenses/templates/dividertemp',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -76,6 +77,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 
 WSGI_APPLICATION = 'expense_tracker.wsgi.application'
@@ -146,3 +148,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'niranjanasunil2435@gmail.com'  # Your Gmail email address
+EMAIL_HOST_PASSWORD = 'mgcx pmyn finr egnp'  # Your Gmail password or app-specific password

@@ -73,6 +73,14 @@
 .custom-color-5 {
   background-color: #fab58d; /* Custom color for Monthly Report */
 }
+  /* Add your CSS styles here */
+.income-container , .savings-container{
+    background-color: #f0f0f0; /* Example background color */
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    
+}
 
   </style>
 </head>
@@ -87,18 +95,18 @@
   <div class="main-content">
     <div class="grid-item expense-item custom-color-1">
       <h2>Expense Tracking</h2>
-      <p>Total expenses this month, categories with the highest spending, any outstanding bills, etc.</p>
+      <p style="font-size: 15px;">Expense Tracker is an intuitive application that allows users to effortlessly log expenses, categorize them, and set budgets, helping them manage their finances effectively. With insightful analysis tools, users can gain valuable insights into their spending habits and make informed decisions to achieve their financial goals.</p>
       <button class="read-more-btn"><a href="{% url 'expense' %}" class="read-more-btn">Read More</a></button>
     </div>
     <div class="grid-item tour-item custom-color-2">
-      <h2>Tour Tracking</h2>
-      <p>Upcoming tours/events, recent tour summaries, etc.</p>
-      <button class="read-more-btn"><a href="{% url 'tourm' %}" class="read-more-btn">Read More</a></button>
+      <h2>Budget Tour</h2>
+      <p style="font-size: 15px;">The Tour Tracking app simplifies expense management by allowing users to manually add categories for each tour, ensuring personalized organization. Additionally, users can set an initial budget for each tour, providing a clear spending limit to guide their financial decisions throughout the journey</p>
+      <button class="read-more-btn"><a href="{% url 'hometour' %}" class="read-more-btn">Read More</a></button>
     </div>
     <div class="grid-item divider-item custom-color-3">
-      <h2>Divider</h2>
-      <p>Recent transactions or activities related to dividing expenses among group members.</p>
-      <button class="read-more-btn"><a href="{% url 'divider' %}" class="read-more-btn">Read More</a></button>
+      <h2>Event Planner</h2>
+      <p style="font-size: 15px;"">The event planner streamlines event coordination by capturing attendee details and tracking individual contributions, ensuring efficient management of resources. Following the event, comprehensive reports detailing expenses for manually entered categories can be seamlessly compiled and sent to authorities via email, facilitating transparent financial documentation.</p>
+      <button class="read-more-btn"><a href="{% url 'eventhome' %}" class="read-more-btn">Read More</a></button>
     </div>
   </div>
   
@@ -108,32 +116,53 @@
   <!-- Monthly Comparison Grid -->
   <div class="grid-item highlight custom-color-4">
     <h2>Monthly Comparison</h2>
-    <p>Add your content for monthly comparison here</p>
+    <p>On this section page, utilize a dynamic bar graph to visually compare monthly expenses, providing users with a clear overview of their spending patterns over time. This feature enhances financial awareness and empowers users to make informed decisions to achieve their budgeting goals.</p>
     <button class="read-more-btn"><a href="{% url 'bar' %}" class="read-more-btn">Read More</a></button>
   </div>
 
   <!-- Monthly Report Grid -->
   <div class="grid-item highlight custom-color-5">
     <h2>Monthly Report</h2>
-    <p>Add your content for monthly report here</p>
+    <p>Incorporate a pie graph on the monthly report page to illustrate expense distribution across categories, including savings, offering users insightful visualization of their spending habits. Additionally, integrate a convenient feature enabling users to download the monthly data as a PDF, facilitating easy access and sharing of financial insights.</p>
     <button class="read-more-btn"><a href="{% url 'chart' %}" class="read-more-btn">Read More</a></button>
   </div>
 </div>
 
 
-  <!-- Additional Sections -->
-  <div>
-    <h2>Profile Settings</h2>
-    <p>Allow users to manage their account settings, preferences, or billing information if applicable.</p>
+
+<div>
+  <h2>Profile Settings</h2>
+  <div class="doc"  style="background-color: #f0f0f0; padding: 10px;  border-radius: 5px;">
+  <p>Allow users to manage their account settings, preferences, or billing information if applicable.</p>
+  <p>If you have any need of emergency fund go to profile and enter the amount used .</p>
   </div>
+  <div class="income-container">
+      
+      {% if incomes %}
+          
+              <p>User: {{ incomes.user }}</p>
+              <p>Amount: {{ incomes.amount }}</p>
+              <p>Emergency Fund: {{ incomes.emergency }}</p>
+              <p>PROFESSION: {{ incomes.profession }}</p>
+         
+      {% else %}
+          <p>No income information available.</p>
+      {% endif %}
+  </div>
+  <div class="savings-container">
+    <p>Total savings:{{ total_savings_expenses }}</p>
+</div>
+</div>
+
+
   <div>
     <h2>Need Help?</h2>
     <p>If you encounter any issues or have questions, please don't hesitate to reach out to our support team.</p>
     <p>For immediate assistance, you can:</p>
     <ul>
       <li><a href="https://www.example.com/support">Visit our support page</a></li>
-      <li>Contact us via email at support@example.com</li>
-      <li>Call our support hotline at +1-800-123-4567</li>
+      <li>Contact us via email at BudgetBuddysupport@gmailS.com</li>
+      <li>Call our support hotline at +140-6789-567</li>
     </ul>
   </div>
 </body>

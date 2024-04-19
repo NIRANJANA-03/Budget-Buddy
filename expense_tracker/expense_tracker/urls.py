@@ -7,6 +7,7 @@ urlpatterns = [
     
     path('', RedirectView.as_view(url='signup/', permanent=False)),
     path('', include('expenses.urls')),
+    
     path('admin/', admin.site.urls),
     
 ]
