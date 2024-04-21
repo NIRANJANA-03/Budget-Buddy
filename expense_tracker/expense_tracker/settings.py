@@ -64,7 +64,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),  # Your original templates directory
             os.path.join(BASE_DIR, 'expenses', 'templates'),
-            'D:/pro/EXPENSE-TRACKER/expense_tracker/expenses/templates/dividertemp',
+            os.path.join(BASE_DIR, 'expenses', 'templates','dividertemp'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
