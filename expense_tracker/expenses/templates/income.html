@@ -79,11 +79,23 @@
             bottom: 20px;
             right: 20px;
         }
+        .messages
+        {
+            text-align: center;
+            color:rgb(243, 122, 142);
+        }
     </style>
 </head>
 <body>
     {% include 'header.html' %}
 <div class="container">
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="income-section">
         <h1>Income Section</h1>
         <form id="incomeForm" method="post" action="{% url 'income' %}">

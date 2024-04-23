@@ -59,7 +59,31 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #610663;
 }
+button {
+            background-color: #610663;
+            border: none;
+            color: white; 
+            padding: 15px 32px; 
+            text-align: center; 
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; 
+            margin: 4px 2px; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            }
 
+
+        button:hover {
+            background-color: #610663;
+        }
+
+        .next-button-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+       
   </style>
 </head>
 <body>
@@ -93,5 +117,10 @@ button[type="submit"]:hover {
         </div>
     </div>
   </div>
+  <div class="next-button-container">
+    <a href="{% url 'income' %}">
+        <button>Edit</button>
+    </a>
+</div>
 </body>
 </html>

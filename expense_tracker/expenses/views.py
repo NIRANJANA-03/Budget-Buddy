@@ -68,14 +68,22 @@ def forgot(request):
 def income(request):
     if request.method == 'POST':
         income_amount = request.POST.get('income')
-        profession = request.POST.get('profession')  # Retrieve the profession from the form data
+        profession = request.POST.get('profession') 
         
-        if income_amount:  # Ensure income amount is provided
-            # Create a new Income object with income amount, user, and profession
-            new_income = Income(amount=income_amount, user=request.user, profession=profession)
-            new_income.save()  # Save the new income object to the database
+        if income_amount:  
+            existing_income = Income.objects.filter(user=request.user).first()
+            
+            if existing_income:  
+                existing_income.amount = income_amount
+                existing_income.save() 
+                messages.success(request, 'Income updated successfully.')
+            else:  
+                new_income = Income(amount=income_amount, user=request.user, profession=profession)
+                new_income.save()  
+                messages.success(request, 'Income added successfully.')  # Add success message
 
-        return redirect('cat')  # Redirect to a relevant URL after saving the income
+
+        return redirect('income') 
     else:
         return render(request, 'income.html')
 
@@ -438,11 +446,12 @@ def cattour(request):
             tour_name = request.session.get('tour_name')
             Tcat.objects.create(category=new_category, tour_name=tour_name)
     
-    # Get all categories for the current tour
+  
     tour_name = request.session.get('tour_name')
     categories = Tcat.objects.filter(tour_name=tour_name)
+    print(categories)
     
-    return render(request, 'cattour.html', {'categories': categories})
+    return render(request, 'cattour.html', {'categories': categories , 'tour_name': tour_name})
 
 from django.contrib import messages
 

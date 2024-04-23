@@ -115,7 +115,7 @@
             <label for="category-select">Category:</label>
             <select name="category">
                 {% for category in  categories_with_zero_expense %}
-                    {% if category != 'savings' and category != 'miscellaneous' and category != 'remaining' %}
+                    {% if category != 'savings'  and category != 'remaining' %}
                         <option value="{{ category }}">{{ category }}</option>
                     {% endif %}
                 {% endfor %}
