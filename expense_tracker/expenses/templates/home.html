@@ -78,16 +78,21 @@
     background-color: #f0f0f0; /* Example background color */
     padding: 20px;
     border-radius: 5px;
-    margin-top: 20px;
+    
     
 }
 
+.next-button-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
   </style>
 </head>
 <body>
   {% include 'header.html' %}
   <div class="header">
-    <h1>Welcome to Budget Buddy, {{ request.user.username }}!</h1>
+    <h1>Welcome to Budget Buddy</h1>
   </div>
 
   <!-- Main Content Grid -->
@@ -165,6 +170,11 @@
       <li>Call our support hotline at +140-6789-567</li>
     </ul>
   </div>
+  <div class="next-button-container">
+    <a href="{% url 'login' %}">
+        <button>log_out</button>
+    </a>
+</div>
 </body>
 </html>
 
