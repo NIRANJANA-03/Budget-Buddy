@@ -101,10 +101,10 @@ def profile(request):
             debit_amount=user_income.emergency-debit_amount
 
             if debit_amount > user_income.savings:
-                return render(request, 'profle.html', {'error_message': 'Debit amount exceeds the emergency fund.'})
+                return render(request, 'profle.html', {'error_message': 'Debit amount exceeds the emergency fund and savings .'})
             else:
                 user_income.emergency=0
-                user_income.savings-=debit_amount
+                user_income.savings=user_income.savings+debit_amount
                 user_income.save()
         else:
             user_income.emergency-=debit_amount

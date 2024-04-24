@@ -130,7 +130,7 @@
     </div>
     {% endif %}
     <p>{{ request.session.report }}</p>
-
+    {% if not event_details.status %}
     <div class="form-group">
       <select id="category" name="category" required>
         <option value="" disabled selected>Select Category</option>
@@ -144,6 +144,7 @@
       <input type="number" id="amount" name="amount" placeholder="Amount " min="0" required>
     </div>
     <button type="submit" class="btn">Add Expense</button>
+    {% endif %}
   </form>
 
   <div class="tour-planner">
