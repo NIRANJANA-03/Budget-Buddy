@@ -89,19 +89,19 @@ button {
 <body>
     {% include 'header.html' %}
     {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
+        <p style="color: red; text-align: center;">{{ error_message }}</p>
     {% endif %}
   <h1 style="color: rgb(3, 3, 3); font-size: 40px; text-align: center;">PROFILE</h1>
   <div class="container">
     <div class="Isection">
       <h2>Income Details</h2>
-      {% for income in user_incomes %}
+      {% if user_inco %}
         <p>User: {{ income.user }}</p>
         <p>Amount: {{ income.amount }}</p>
         <p>Emergency Fund: {{ income.emergency }}</p>
         <p>Profession: {{ income.profession }}</p>
         <p>Total savings : {{ income.savings}}</p>
-      {% endfor %}
+      {% endif %}
     </div>
 
     <div class="Dsection">

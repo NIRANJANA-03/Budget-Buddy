@@ -90,7 +90,8 @@
             color: #fff;
         }
         .close {
-    margin-top: 100px; /* Adjust this value as needed */
+            
+            padding:50px
         }
         .closing-box {
         background-color: #cac9ca; /* Red background color, you can adjust this */
@@ -105,6 +106,9 @@
 </head>
 <body>
     {% include 'header.html' %}
+    {% if error_message %}
+        <p style="color: red; text-align: center;">{{ error_message }}</p>
+    {% endif %}
     <h1>Expense Tracker</h1>
     <form id="expense-form" method="post" action="{% url 'expense' %}">
         {% csrf_token %}

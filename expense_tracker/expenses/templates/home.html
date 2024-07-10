@@ -16,6 +16,25 @@
       color: #ffffff;
       padding: 20px;
       text-align: center;
+      position: relative; /* Added for positioning the logout button */
+    }
+    .logout-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #ffffff;
+      color: #610663;
+      padding: 10px 20px;
+      border: 2px solid #610663;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+    .logout-button:hover {
+      /*background-color: #610663; /* Darker shade on hover */
+      /*border-color: #610663; /* Darker border on hover */
+      color: #ffffff; /* Change text color on hover */
     }
     .main-content {
       padding: 20px;
@@ -45,54 +64,43 @@
       transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add smooth transition */
       align-self: flex-end; /* Align button to the bottom-right corner */
     }
-
     .read-more-btn:hover {
       background-color: #0056b3; /* Darker shade on hover */
       border-color: #0056b3; /* Darker border on hover */
     }
     h1 {
       text-align: right;
-      font-size: 24px; 
+      font-size: 24px;
       margin-top: 20px;
     }
     .custom-color-1 {
-  background-color: #ffcccc; /* Custom color for Expense Tracking */
-}
-
-.custom-color-2 {
-  background-color: #ccffcc; /* Custom color for Tour Tracking */
-}
-
-.custom-color-3 {
-  background-color: #ccccff; /* Custom color for Divider */
-}
-.custom-color-4 {
-  background-color: #fae19e; /* Custom color for Monthly Comparison */
-}
-
-.custom-color-5 {
-  background-color: #fab58d; /* Custom color for Monthly Report */
-}
-  /* Add your CSS styles here */
-.income-container , .savings-container{
-    background-color: #f0f0f0; /* Example background color */
-    padding: 20px;
-    border-radius: 5px;
-    
-    
-}
-
-.next-button-container {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-        }
+      background-color: #ffcccc; /* Custom color for Expense Tracking */
+    }
+    .custom-color-2 {
+      background-color: #ccffcc; /* Custom color for Tour Tracking */
+    }
+    .custom-color-3 {
+      background-color: #ccccff; /* Custom color for Divider */
+    }
+    .custom-color-4 {
+      background-color: #fae19e; /* Custom color for Monthly Comparison */
+    }
+    .custom-color-5 {
+      background-color: #fab58d; /* Custom color for Monthly Report */
+    }
+    .income-container, .savings-container {
+      background-color: #f0f0f0; /* Example background color */
+      padding: 20px;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
   {% include 'header.html' %}
+  
   <div class="header">
     <h1>Welcome to Budget Buddy</h1>
+    <a href="{% url 'login' %}" class="logout-button">Log Out</a>
   </div>
 
   <!-- Main Content Grid -->
@@ -110,55 +118,48 @@
     </div>
     <div class="grid-item divider-item custom-color-3">
       <h2>Event Planner</h2>
-      <p style="font-size: 15px;"">The event planner streamlines event coordination by capturing attendee details and tracking individual contributions, ensuring efficient management of resources. Following the event, comprehensive reports detailing expenses for manually entered categories can be seamlessly compiled and sent to authorities via email, facilitating transparent financial documentation.</p>
+      <p style="font-size: 15px;">The event planner streamlines event coordination by capturing attendee details and tracking individual contributions, ensuring efficient management of resources. Following the event, comprehensive reports detailing expenses for manually entered categories can be seamlessly compiled and sent to authorities via email, facilitating transparent financial documentation.</p>
       <button class="read-more-btn"><a href="{% url 'eventhome' %}" class="read-more-btn">Read More</a></button>
     </div>
   </div>
-  
-</div>
-<h2>Highlights</h2>
-<div class="main-content">
-  <!-- Monthly Comparison Grid -->
-  <div class="grid-item highlight custom-color-4">
-    <h2>Monthly Comparison</h2>
-    <p>On this section page, utilize a dynamic bar graph to visually compare monthly expenses, providing users with a clear overview of their spending patterns over time. This feature enhances financial awareness and empowers users to make informed decisions to achieve their budgeting goals.</p>
-    <button class="read-more-btn"><a href="{% url 'bar' %}" class="read-more-btn">Read More</a></button>
+
+  <h2>Highlights</h2>
+  <div class="main-content">
+    <!-- Monthly Comparison Grid -->
+    <div class="grid-item highlight custom-color-4">
+      <h2>Monthly Comparison</h2>
+      <p>On this section page, utilize a dynamic bar graph to visually compare monthly expenses, providing users with a clear overview of their spending patterns over time. This feature enhances financial awareness and empowers users to make informed decisions to achieve their budgeting goals.</p>
+      <button class="read-more-btn"><a href="{% url 'bar' %}" class="read-more-btn">Read More</a></button>
+    </div>
+
+    <!-- Monthly Report Grid -->
+    <div class="grid-item highlight custom-color-5">
+      <h2>Monthly Report</h2>
+      <p>Incorporate a pie graph on the monthly report page to illustrate expense distribution across categories, including savings, offering users insightful visualization of their spending habits. Additionally, integrate a convenient feature enabling users to download the monthly data as a PDF, facilitating easy access and sharing of financial insights.</p>
+      <button class="read-more-btn"><a href="{% url 'chart' %}" class="read-more-btn">Read More</a></button>
+    </div>
   </div>
 
-  <!-- Monthly Report Grid -->
-  <div class="grid-item highlight custom-color-5">
-    <h2>Monthly Report</h2>
-    <p>Incorporate a pie graph on the monthly report page to illustrate expense distribution across categories, including savings, offering users insightful visualization of their spending habits. Additionally, integrate a convenient feature enabling users to download the monthly data as a PDF, facilitating easy access and sharing of financial insights.</p>
-    <button class="read-more-btn"><a href="{% url 'chart' %}" class="read-more-btn">Read More</a></button>
-  </div>
-</div>
-
-
-
-<div>
-  <h2>Profile Settings</h2>
-  <div class="doc"  style="background-color: #f0f0f0; padding: 10px;  border-radius: 5px;">
-  <p>Allow users to manage and add their account settings, preferences, or billing information if applicable.</p>
-  <p>If you have any need of emergency fund go to profile and enter the amount used .</p>
-  </div>
-  <div class="income-container">
-      
+  <div>
+    <h2>Profile Settings</h2>
+    <div class="doc" style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
+      <p>Allow users to manage and add their account settings, preferences, or billing information if applicable.</p>
+      <p>If you have any need of emergency fund go to profile and enter the amount used.</p>
+    </div>
+    <div class="income-container">
       {% if incomes %}
-          
-              <p>User: {{ incomes.user }}</p>
-              <p>Amount: {{ incomes.amount }}</p>
-              <p>Emergency Fund: {{ incomes.emergency }}</p>
-              <p>PROFESSION: {{ incomes.profession }}</p>
-         
+        <p>User: {{ incomes.user }}</p>
+        <p>Amount: {{ incomes.amount }}</p>
+        <p>Emergency Fund: {{ incomes.emergency }}</p>
+        <p>Profession: {{ incomes.profession }}</p>
       {% else %}
-          <p>No income information available.</p>
+        <p>No income information available.</p>
       {% endif %}
+    </div>
+    <div class="savings-container">
+      <p>Total savings: {{ total_savings_expenses }}</p>
+    </div>
   </div>
-  <div class="savings-container">
-    <p>Total savings:{{ total_savings_expenses }}</p>
-</div>
-</div>
-
 
   <div>
     <h2>Need Help?</h2>
@@ -166,15 +167,9 @@
     <p>For immediate assistance, you can:</p>
     <ul>
       <li><a href="https://www.example.com/support">Visit our support page</a></li>
-      <li>Contact us via email at BudgetBuddysupport@gmailS.com</li>
-      <li>Call our support hotline at +140-6789-567</li>
+      <li>Contact us via email at BudgetBuddysupport@gmail.com</li>
+      <li>Call our support hotline at +91-876590456</li>
     </ul>
   </div>
-  <div class="next-button-container">
-    <a href="{% url 'login' %}">
-        <button>log_out</button>
-    </a>
-</div>
 </body>
 </html>
-

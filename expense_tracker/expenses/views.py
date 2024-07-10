@@ -227,6 +227,17 @@ def expense(request):
                     ExpenseDetails.objects.create( user=request.user, category=categorye, month_year=month_year_date, cat_expense=fixed_expense_value if fixed_expense_value is not None else 0)
             expense_details = ExpenseDetails.objects.filter(user=request.user, category=category, month_year=month_year_date)
             expense_detail = expense_details.first()  
+            remaining_cat= ExpenseDetails.objects.filter(user=request.user, category='remaining', month_year=month_year_date).first()
+            r=remaining_cat.cat_expense -amount
+
+            if r<0:
+                
+                 return render(request, 'expense.html', {'categories_with_zero_expense': categories_with_zero_expense, 
+                                                        'remaining_category':remaining_cat,
+                                                        'error_message': 'The remaining of your salary is smaller than the entered amount. Please debit from your emergency fund if urgent.'})
+            
+
+            expense_detail.cat_expense += amount
             expense_detail.cat_expense += amount
             expense_detail.save()
                
