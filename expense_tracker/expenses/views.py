@@ -90,7 +90,7 @@ def income(request):
 @login_required
 def profile(request):
     
-    user_incomes = Income.objects.filter(user=request.user)
+    user_income = Income.objects.filter(user=request.user)
     if request.method == 'POST':
         debit_amount = request.POST.get('debit_amount')
         user_income = Income.objects.get(user=request.user)
@@ -113,7 +113,7 @@ def profile(request):
         
         # Redirect to a success page or any other appropriate page
         return redirect('profile')
-    return render(request, 'profile.html', {'user_incomes': user_incomes,})
+    return render(request, 'profile.html', {'user_income': user_income,})
 
 
 @login_required

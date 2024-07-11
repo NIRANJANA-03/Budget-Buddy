@@ -95,13 +95,13 @@ button {
   <div class="container">
     <div class="Isection">
       <h2>Income Details</h2>
-      {% if user_inco %}
+      {%for income in user_income %}
         <p>User: {{ income.user }}</p>
         <p>Amount: {{ income.amount }}</p>
         <p>Emergency Fund: {{ income.emergency }}</p>
         <p>Profession: {{ income.profession }}</p>
         <p>Total savings : {{ income.savings}}</p>
-      {% endif %}
+      {% endfor %}
     </div>
 
     <div class="Dsection">
