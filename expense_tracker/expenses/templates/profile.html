@@ -5,122 +5,183 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to Budget Buddy</title>
   <style>
+    /* General Styles */
     body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
 
-.container {
-  display: flex;
-  justify-content: space-around;
-  padding: 50px;
-}
+    h1 {
+      color: #333;
+      font-size: 32px;
+      text-align: center;
+      margin: 20px 0;
+    }
 
-.Isection {
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  width: 45%; /* Adjust width as needed */
-}
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-.Dsection {
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  width: 45%; /* Adjust width as needed */
-}
+    .Isection, .Dsection {
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
 
-form {
-  margin-top: 20px;
-}
+    .Isection h2, .Dsection h2 {
+      font-size: 20px;
+      color: #610663;
+      margin-bottom: 20px;
+    }
 
-input[type="number"] {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  outline: none;
-}
+    p {
+      margin: 10px 0;
+      font-size: 14px;
+    }
 
-button[type="submit"] {
-  background-color: #610663;
-  color: #ffffff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+    form {
+      margin-top: 20px;
+    }
 
-button[type="submit"]:hover {
-  background-color: #610663;
-}
-button {
-            background-color: #610663;
-            border: none;
-            color: white; 
-            padding: 15px 32px; 
-            text-align: center; 
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px; 
-            margin: 4px 2px; 
-            cursor: pointer; 
-            border-radius: 8px; 
-            }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      outline: none;
+      margin-bottom: 15px;
+    }
 
+    button {
+      background-color: #610663;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
 
-        button:hover {
-            background-color: #610663;
-        }
+    button:hover {
+      background-color: #500650;
+    }
 
-        .next-button-container {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-        }
-       
+    #debit-message {
+      background-color: #f2f2f2;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .next-button-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .next-button-container a button {
+      display: inline-block;
+      padding: 12px 24px;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      .Isection, .Dsection {
+        padding: 15px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      .Isection, .Dsection {
+        padding: 10px;
+      }
+
+      input[type="number"] {
+        padding: 8px;
+      }
+
+      button {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
-    {% include 'header.html' %}
-    {% if error_message %}
-        <p style="color: red; text-align: center;">{{ error_message }}</p>
-    {% endif %}
-  <h1 style="color: rgb(3, 3, 3); font-size: 40px; text-align: center;">PROFILE</h1>
+  {% include 'header.html' %}
+  {% if error_message %}
+    <p style="color: red; text-align: center;">{{ error_message }}</p>
+  {% endif %}
+  
+  <h1>PROFILE</h1>
   <div class="container">
+    <!-- Income Section -->
     <div class="Isection">
       <h2>Income Details</h2>
-      {%for income in user_income %}
-        <p>User: {{ income.user }}</p>
-        <p>Amount: {{ income.amount }}</p>
-        <p>Emergency Fund: {{ income.emergency }}</p>
-        <p>Profession: {{ income.profession }}</p>
-        <p>Total savings : {{ income.savings}}</p>
+      {% for income in user_income %}
+        <p><strong>User:</strong> {{ income.user }}</p>
+        <p><strong>Amount:</strong> {{ income.amount }}</p>
+        <p><strong>Emergency Fund:</strong> {{ income.emergency }}</p>
+        <p><strong>Profession:</strong> {{ income.profession }}</p>
+        <p><strong>Total Savings:</strong> {{ income.savings }}</p>
       {% endfor %}
     </div>
 
+    <!-- Debit Section -->
     <div class="Dsection">
-        <h2>Debit Amount</h2>
-        <form action="{% url 'profile' %}" method="post">
-            {% csrf_token %}
-            <label for="debit_amount">Enter Amount to Debit:</label>
-            <input type="number" id="debit_amount" name="debit_amount" required>
-            <button type="submit">Debit</button>
-        </form>
-        <div id="debit-message" style="background-color: #c4c1c1; padding: 10px; border: 1px solid #dadada; border-radius: 5px; margin-top: 10px; padding: 30px;">
-            You can debit amount from the emergency fund. If it's greater than the emergency fund, then the amount will be reduced from savings.
-        </div>
+      <h2>Debit Amount</h2>
+      <form action="{% url 'profile' %}" method="post">
+        {% csrf_token %}
+        <label for="debit_amount">Enter Amount to Debit:</label>
+        <input type="number" id="debit_amount" name="debit_amount" required>
+        <button type="submit">Debit</button>
+      </form>
+      <div id="debit-message">
+        You can debit amount from the emergency fund. If it's greater than the emergency fund, then the amount will be reduced from savings.
+      </div>
     </div>
   </div>
+
+  <!-- Next Button Section -->
   <div class="next-button-container">
     <a href="{% url 'income' %}">
-        <button>Edit</button>
+      <button>Edit</button>
     </a>
-</div>
+  </div>
 </body>
 </html>

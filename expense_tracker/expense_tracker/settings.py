@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ['budgetbuddy.com', '127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'expenses',
-   
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -153,4 +153,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'niranjanasunil2435@gmail.com'  # Your Gmail email address
-EMAIL_HOST_PASSWORD = 'mgcx pmyn finr egnp'  # Your Gmail password or app-specific password
+EMAIL_HOST_PASSWORD = 'ykcf vciw orcy wynx '  # Your Gmail password or app-specific password

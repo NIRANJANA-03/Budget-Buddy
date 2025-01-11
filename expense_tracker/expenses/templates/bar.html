@@ -6,32 +6,63 @@
     <title>Expense Bar Graph</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        #barChart {
-            width: 300mm; 
-            height: 300mm; 
-            display: block;
-            margin: 0 auto;
-            align-content: center;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
         }
-        h1{
+
+        h1 {
             text-align: center;
+            margin-top: 20px;
+        }
+
+        #chart-container {
+            max-width: 90%; /* Chart container width scales to 90% of the viewport */
+            margin: 0 auto; /* Center the chart container */
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        canvas {
+            width: 100%; /* Make the canvas take up the full container width */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em; /* Adjust heading size for tablets */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2em; /* Adjust heading size for smaller devices */
+            }
         }
     </style>
 </head>
 <body>
     {% include 'header.html' %}
-    <h1>MONTHLY DATA</h1>
-    <canvas id="barChart" ></canvas>
+    <h1>Monthly Data</h1>
+    <div id="chart-container">
+        <canvas id="barChart"></canvas>
+    </div>
 
-    
     <script>
+        // Load data passed from the backend
         var zippedData = {{ zipped_data_json|safe }};
         
-        
+        // Extract labels and values from the data
         var labels = zippedData.map(function(pair) { return pair[0]; });
         var values = zippedData.map(function(pair) { return parseFloat(pair[1]); });
 
-        
+        // Create the bar chart
         var ctx = document.getElementById('barChart').getContext('2d');
         var barChart = new Chart(ctx, {
             type: 'bar',
@@ -46,15 +77,32 @@
                 }]
             },
             options: {
+                responsive: true, // Enable responsiveness
+                maintainAspectRatio: true, // Maintain chart aspect ratio
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Categories'
                         }
-                    }]
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Expense Amount'
+                        }
+                    }
                 },
-                responsive: false, 
-                
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                }
             }
         });
     </script>

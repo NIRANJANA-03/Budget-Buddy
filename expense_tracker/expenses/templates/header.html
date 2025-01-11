@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Project Name</title>
     <style>
-        /* Add your existing styles here */
+        /* General styles */
         body {
             font-family: 'Arial', sans-serif;
             background-size: cover;
@@ -15,57 +15,85 @@
         }
 
         .header {
-            height: 2cm;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
-            background-color: #610663; 
+            padding: 10px 20px;
+            background-color: #610663;
         }
 
         .logo-and-name {
-            display: flex; /* Use flexbox layout */
-            align-items: center; /* Center vertically */
+            display: flex;
+            align-items: center;
         }
 
         .logo {
-            margin-right: 20px; /* Add margin between the logo and project name */
+            margin-right: 10px;
         }
 
         .project-name h1 {
-            color: white; 
-            margin: 0; /* Remove default margins */
+            color: white;
+            margin: 0;
+            font-size: 1.5em;
         }
 
         .nav-links ul {
             list-style: none;
             margin: 0;
             padding: 0;
+            display: flex; /* Ensures links are inline */
+            flex-wrap: wrap; /* Wraps if the screen is too narrow */
         }
 
         .nav-links li {
-            display: inline-block;
-            margin-right: 20px;
-        }
-
-        .nav-links li:last-child {
-            margin-right: 0;
+            margin: 5px 10px;
         }
 
         .nav-links a {
-            color: white; 
+            color: white;
             text-decoration: none;
+            font-size: 0.9em; /* Adjust font size for readability on small screens */
         }
-        
+
         .logo-image {
-            width: 1.5cm; /* Adjust width as needed */
-            height: auto; /* Allow height to adjust proportionally */
-            padding: 0.2cm; /* Add padding around the image */
+            width: 40px;
+            height: auto;
+        }
+
+        /* Media queries for small devices like iPhone SE */
+        @media (max-width: 375px) {
+            .header {
+                flex-direction: column; /* Stack logo and navigation vertically */
+                align-items: center;
+            }
+
+            .logo-and-name {
+                margin-bottom: 10px;
+                justify-content: center;
+            }
+
+            .project-name h1 {
+                font-size: 1.2em; /* Reduce font size for smaller screens */
+                text-align: center;
+            }
+
+            .nav-links ul {
+                justify-content: center; /* Center the links */
+                flex-wrap: nowrap; /* Ensure links stay on one line */
+                overflow-x: auto; /* Add horizontal scrolling if necessary */
+            }
+
+            .nav-links li {
+                margin: 5px 15px; /* Add extra spacing between links */
+            }
+
+            .nav-links a {
+                font-size: 0.8em; /* Slightly reduce font size for small screens */
+            }
         }
     </style>
 </head>
 <body>
-    
     {% load static %}
     <header class="header">
         <div class="logo-and-name">
@@ -80,7 +108,7 @@
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'expense' %}">Expense Tracking</a></li>
-                <li><a href="{% url 'eventhome' %}">Event planer</a></li>
+                <li><a href="{% url 'eventhome' %}">Event Planner</a></li>
                 <li><a href="{% url 'hometour' %}">Budget Tour</a></li>
                 <li><a href="{% url 'profile' %}">Profile</a></li>
             </ul>

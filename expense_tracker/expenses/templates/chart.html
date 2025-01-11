@@ -5,178 +5,232 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Pie Chart</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   
+
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .input-container {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             margin-bottom: 20px;
+            gap: 10px;
+            justify-content: center;
         }
 
         .input-container label {
-            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        #date {
+            width: 250px;
+            height: 40px;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        .big-button {
+            background-color: #610663;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .big-button:hover {
+            background-color: #500650;
         }
 
         #chart-container {
-            width: 80%;
-            max-width: 800px; /* Increased max-width */
-            margin-top: 20px;
-            text-align: center; /* Center the chart container */
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
         }
 
         #expenseChart {
-            width: 100%; /* Set the chart canvas width to 100% */
-            height: auto; /* Maintain aspect ratio */
+            width: 100%;
+            height: auto;
         }
+
         .legend {
-        margin-top: 20px;
-        border-collapse: collapse;
-        width: 100%;
-    }
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-    .legend th,
-    .legend td {
-        border: 1px solid #faefef;
-        padding: 8px;
-        text-align: left;
-    }
-    #date {
-        width: 200px;
-        height: 40px; /* Set the width of the date field */
-    }
+        .legend th,
+        .legend td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
 
-    .legend th {
-        background-color: #a3c8eb;
-    }
+        .legend th {
+            background-color: #a3c8eb;
+            color: #333;
+            font-size: 16px;
+        }
 
-    .legend tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
+        .legend tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
 
-    .legend tr:hover {
-        background-color: #ddd;
-    }
-    .big-button {
-        background-color: #610663; /* Green */
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin-top: 10px; /* Adjust margin as needed */
-        cursor: pointer;
-        margin-right: 10px;
-        width: 300px;
-    }
+        .legend tr:hover {
+            background-color: #ddd;
+        }
 
-    .big-button:hover {
-        background-color: #610663; /* Darker green */
-    }
-    #date {
-        margin-right: 10px; 
-        width: 200px;
-        height: 30px; 
-    }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .big-button {
+                width: 100%;
+                text-align: center;
+            }
+
+            #date {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            .legend th,
+            .legend td {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .heading h1 {
+                font-size: 18px;
+            }
+
+            .legend th,
+            .legend td {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            #chart-container {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     {% include 'header.html' %}
 
     <div class="container">
-        {% if not pdf_export %}<div class="heading"><h1>PIE CHART REPORT</h1></div>{% endif %}
+        {% if not pdf_export %}
+            <div class="heading">
+                <h1>PIE CHART REPORT</h1>
+            </div>
+        {% endif %}
+
         {% if message %}
             <div class="message" style="text-align: center; color: red;">{{ message }}</div>
         {% endif %}
-    
-        <form id="bodyy" method="post" action="{% url 'chart' %}">
-            {% csrf_token %}
-            {% if not pdf_export %}
-            <div class="input-container">
-                <label for="date">Select Date:</label>
-                <input type="date" id="date" name="date">
-            </div>
-            <div>
-                <button type="submit" class="big-button">Show</button>
-            </div>
-            {% endif %}
-            
-        </form>
-       
+
+        {% if not pdf_export %}
+            <form method="post" action="{% url 'chart' %}">
+                {% csrf_token %}
+                <div class="input-container">
+                    <label for="date">Select Date:</label>
+                    <input type="date" id="date" name="date">
+                </div>
+                <div>
+                    <button type="submit" class="big-button">Show</button>
+                </div>
+            </form>
+        {% endif %}
+
         {% if data %}
-        
-        <div id="chart-container">
-            <canvas id="expenseChart"></canvas>
-        </div>
-        
+            {% if not pdf_export %}
+                <div id="chart-container">
+                    <canvas id="expenseChart"></canvas>
+                </div>
+            {% endif %}
 
-        <div><h1>TABLE</h1></div>
-        <table class="legend">
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Expense</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for category, amount in data %}
+            <table class="legend">
+                <thead>
                     <tr>
-                        <td>{{ category }}</td>
-                        <td>{{ amount }}</td>
+                        <th>Category</th>
+                        <th>Expense</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
-    
-    </div>
-    <div style="text-align: right; margin-top: 20px;">
-        {% if selected_date_str %}
-        <a href="{% url 'download_pdf' %}" class="big-button">Download PDF</a>
-
+                </thead>
+                <tbody>
+                    {% for category, amount in data %}
+                        <tr>
+                            <td>{{ category }}</td>
+                            <td>{{ amount }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
     </div>
-    
-    <script>
-        const ctx = document.getElementById('expenseChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: [{% for category, amount in data %}"{{ category }}", {% endfor %}],
-                datasets: [{
-                    data: [{% for category, amount in data %}{{ amount }}, {% endfor %}],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(241, 101, 234, 0.7)',
-                        'rgba(255, 206, 86, 0.7)',
-                        'rgba(75, 192, 192, 0.7)',
-                        'rgba(153, 102, 255, 0.7)',
-                        'rgba(255, 159, 64, 0.7)',
-                        'rgba(255, 0, 0, 0.7)',       // Red
-                        'rgba(0, 255, 0, 0.7)',       // Green
-                        'rgba(0, 0, 255, 0.7)',       // Blue
-                        'rgba(255, 255, 0, 0.7)',     // Yellow
-                        'rgba(255, 0, 255, 0.7)',     // Magenta
-                        'rgba(0, 255, 255, 0.7)'      // Cyan
-                        
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Expense Breakdown'
+
+    {% if not pdf_export and selected_date_str %}
+        <div style="text-align: right; margin-top: 20px;">
+            <a href="{% url 'download_pdf' %}" class="big-button">Download PDF</a>
+        </div>
+    {% endif %}
+
+    {% if not pdf_export %}
+        <script>
+            const ctx = document.getElementById('expenseChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: [{% for category, amount in data %}"{{ category }}", {% endfor %}],
+                    datasets: [{
+                        data: [{% for category, amount in data %}{{ amount }}, {% endfor %}],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(241, 101, 234, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)',
+                            'rgba(255, 0, 0, 0.7)',
+                            'rgba(0, 255, 0, 0.7)',
+                            'rgba(0, 0, 255, 0.7)',
+                            'rgba(255, 255, 0, 0.7)',
+                            'rgba(255, 0, 255, 0.7)',
+                            'rgba(0, 255, 255, 0.7)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Expense Breakdown'
+                    }
                 }
-            }
-        });
-    </script>
+            });
+        </script>
+    {% endif %}
 </body>
 </html>

@@ -5,19 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to Budget Buddy</title>
   <style>
-    /* Add your CSS styles here */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
     }
+
     .header {
       background-color: #610663;
       color: #ffffff;
       padding: 20px;
       text-align: center;
-      position: relative; /* Added for positioning the logout button */
+      position: relative; /* For positioning the logout button */
     }
+
     .logout-button {
       position: absolute;
       top: 20px;
@@ -31,67 +34,120 @@
       text-decoration: none;
       transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     }
+
     .logout-button:hover {
-      /*background-color: #610663; /* Darker shade on hover */
-      /*border-color: #610663; /* Darker border on hover */
-      color: #ffffff; /* Change text color on hover */
+      background-color: #610663;
+      color: #ffffff;
     }
+
+    h1, h2 {
+      text-align: center;
+      margin: 20px 0;
+    }
+
     .main-content {
       padding: 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      grid-gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust for smaller devices */
+      gap: 20px;
     }
+
     .grid-item {
+      background-color: #ffffff;
       padding: 20px;
-      border-radius: 5px;
-      position: relative;
-      height: 250px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
     }
-    .highlight {
-      background-color: #f0f0f0;
-    }
+
     .read-more-btn {
       background-color: #610663;
       color: #ffffff;
       padding: 10px 20px;
-      border: 2px solid #610663; /* Add border for better visibility */
+      border: none;
       border-radius: 5px;
-      cursor: pointer;
+      text-align: center;
       text-decoration: none;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add smooth transition */
-      align-self: flex-end; /* Align button to the bottom-right corner */
+      transition: background-color 0.3s ease;
+      align-self: flex-start; /* Align button to the start of the grid item */
     }
+
     .read-more-btn:hover {
-      background-color: #0056b3; /* Darker shade on hover */
-      border-color: #0056b3; /* Darker border on hover */
+      background-color: #500650;
     }
-    h1 {
-      text-align: right;
-      font-size: 24px;
-      margin-top: 20px;
-    }
-    .custom-color-1 {
-      background-color: #ffcccc; /* Custom color for Expense Tracking */
-    }
-    .custom-color-2 {
-      background-color: #ccffcc; /* Custom color for Tour Tracking */
-    }
-    .custom-color-3 {
-      background-color: #ccccff; /* Custom color for Divider */
-    }
-    .custom-color-4 {
-      background-color: #fae19e; /* Custom color for Monthly Comparison */
-    }
-    .custom-color-5 {
-      background-color: #fab58d; /* Custom color for Monthly Report */
-    }
-    .income-container, .savings-container {
-      background-color: #f0f0f0; /* Example background color */
+
+    .custom-color-1 { background-color: #ffcccc; } /* Expense Tracking */
+    .custom-color-2 { background-color: #ccffcc; } /* Tour Tracking */
+    .custom-color-3 { background-color: #ccccff; } /* Event Planner */
+    .custom-color-4 { background-color: #fae19e; } /* Monthly Comparison */
+    .custom-color-5 { background-color: #fab58d; } /* Monthly Report */
+
+    .doc, .income-container, .savings-container {
+      background-color: #f0f0f0;
       padding: 20px;
-      border-radius: 5px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin: 10px 0;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .header {
+        text-align: center;
+        padding: 15px;
+      }
+
+      .logout-button {
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .grid-item {
+        padding: 15px;
+      }
+
+      .read-more-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 10px;
+      }
+      
+      
+      .logout-button {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+
+      h1 {
+        font-size: 15px;
+      }
+
+      .grid-item {
+        padding: 10px;
+      }
+
+      .read-more-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
     }
   </style>
 </head>
@@ -99,7 +155,8 @@
   {% include 'header.html' %}
   
   <div class="header">
-    <h1>Welcome to Budget Buddy</h1>
+    <h1 style="text-align: left; margin-left: 20px;">Welcome to BudgetBuddy</h1>
+
     <a href="{% url 'login' %}" class="logout-button">Log Out</a>
   </div>
 

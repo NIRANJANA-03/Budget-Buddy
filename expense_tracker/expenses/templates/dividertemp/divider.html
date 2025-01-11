@@ -10,40 +10,44 @@
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
- 
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
   }
+
   .expense-container {
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  max-width: 600px;
-  width: 100%;
-  margin: 20px auto 0;
-}
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 90%; /* Adjust for smaller screens */
+    margin: 20px auto;
+  }
 
   .expense-container h1 {
     margin-bottom: 20px;
     color: #610663;
+    font-size: 24px;
   }
+
   .form-group {
     margin-bottom: 20px;
   }
-  .form-group select, .form-group input {
-    width: calc(100% - 20px);
+
+  .form-group select,
+  .form-group input {
+    width: 100%; /* Full width on small screens */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     outline: none;
   }
-  .form-group select:focus, .form-group input:focus {
+
+  .form-group select:focus,
+  .form-group input:focus {
     border-color: #610663;
   }
+
   .btn {
     background-color: #610663;
     color: #fff;
@@ -52,81 +56,136 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 100%;
+    width: 100%; /* Full width button */
     max-width: 200px;
     margin: auto;
     display: block;
   }
+
   .btn:hover {
-    background-color:#610663;
+    background-color: #500650;
   }
+
   #result {
     margin-top: 20px;
     color: #610663;
   }
+
   table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-       
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
 
-        th {
-            background-color: #610663;
-            color: white;
-        }
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
 
-        span {
-            font-weight: bold;
-            color: #333;
-        }
+  th {
+    background-color: #610663;
+    color: white;
+    font-size: 14px;
+  }
 
-        .message-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ffcccc; /* light red */
-            border: 2px solid #ff0000; /* red */
-            padding: 10px 20px;
-            border-radius: 5px;
-        }
-        .close-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-        }
-        
-        button {
-            background-color: #610663;
-            color: #fff;
-            cursor: pointer;
-            border: none;
-            padding: 12px;
-        }
+  td {
+    font-size: 13px;
+  }
 
-        button:hover {
-            background-color: #610663;
-        }
-        
+  span {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .message-container {
+    background-color: #ffcccc; /* Light red */
+    border: 2px solid #ff0000; /* Red */
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  .close-button {
+    position: relative;
+    margin-top: 20px;
+  }
+
+  button {
+    background-color: #610663;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    padding: 12px;
+    width: 100%; /* Full width button */
+  }
+
+  button:hover {
+    background-color: #500650;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .expense-container {
+      padding: 30px;
+    }
+
+    .expense-container h1 {
+      font-size: 20px;
+    }
+
+    th,
+    td {
+      font-size: 12px;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .btn {
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .expense-container {
+      padding: 20px;
+    }
+
+    .expense-container h1 {
+      font-size: 18px;
+    }
+
+    th,
+    td {
+      font-size: 11px;
+    }
+
+    button {
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .btn {
+      padding: 8px;
+    }
+  }
 </style>
 </head>
 <body>
   {% include 'header.html' %}
 <div class="expense-container">
   <h1>Event Expense</h1>
-  <form id="expenseForm"  method="post" action="{% url 'divider' event_name=event_details.event_name  %}">
+  <form id="expenseForm" method="post" action="{% url 'divider' event_name=event_details.event_name  %}">
     {% csrf_token %}
     {% if messages %}
     <div class="message-container">
-        {% for message in messages %}
-                <p style="color: #f83a3a; text-align: center;">{{ message }}</p>
-        {% endfor %}
+      {% for message in messages %}
+        <p style="color: #f83a3a; text-align: center;">{{ message }}</p>
+      {% endfor %}
     </div>
     {% endif %}
     <p>{{ request.session.report }}</p>
@@ -134,14 +193,13 @@
     <div class="form-group">
       <select id="category" name="category" required>
         <option value="" disabled selected>Select Category</option>
-        <!-- Loop through categories and display as options -->
         {% for cat_detail in cat_details %}
           <option value="{{ cat_detail.category }}">{{ cat_detail.category }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="form-group">
-      <input type="number" id="amount" name="amount" placeholder="Amount " min="0" required>
+      <input type="number" id="amount" name="amount" placeholder="Amount" min="0" required>
     </div>
     <button type="submit" class="btn">Add Expense</button>
     {% endif %}
@@ -149,68 +207,65 @@
 
   <div class="tour-planner">
     <div class="result-section">
-        {% if event_details %}
-            <h2>Details for {{ event_details.event_name }}</h2>
-            <table>
-                <tr>
-                    <th>Detail Name</th>
-                    <th>Value</th>
-                </tr>
-                <tr>
-                    <td><span>Event Name</span></td>
-                    <td>{{ event_details.event_name }}</td>
-                </tr>
-                <tr>
-                    <td><span>Total Spend</span></td>
-                    <td>{{ event_details.total }}</td>
-                </tr>
-                <tr>
-                    <td><span>Collected Amount</span></td>
-                    <td>{{ event_details.collected }}</td>
-                </tr>
-                <tr>
-                    <td><span>Number of person</span></td>
-                    <td>{{ event_details.num_persons }}</td>
-                </tr>
-                
-            </table>
-        {% else %}
-            <p>No details found for the entered event name.</p>
-        {% endif %}
-    </div>
-</div>
-  {% if cat_details %}
-    <h3>Category Details </h3>
-    <table>
-      <tr>
-        <th>Category</th>
-        <th>Expense</th>
-      </tr>
-      {% for cat_detail in cat_details %}
+      {% if event_details %}
+      <h2>Details for {{ event_details.event_name }}</h2>
+      <table>
         <tr>
-          <td>{{ cat_detail.category }}</td>
-          <td>{{ cat_detail.expense }}</td>
+          <th>Detail Name</th>
+          <th>Value</th>
         </tr>
-      {% endfor %}
-    </table>
+        <tr>
+          <td><span>Event Name</span></td>
+          <td>{{ event_details.event_name }}</td>
+        </tr>
+        <tr>
+          <td><span>Total Spend</span></td>
+          <td>{{ event_details.total }}</td>
+        </tr>
+        <tr>
+          <td><span>Collected Amount</span></td>
+          <td>{{ event_details.collected }}</td>
+        </tr>
+        <tr>
+          <td><span>Number of Persons</span></td>
+          <td>{{ event_details.num_persons }}</td>
+        </tr>
+      </table>
+      {% else %}
+      <p>No details found for the entered event name.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if cat_details %}
+  <h3>Category Details</h3>
+  <table>
+    <tr>
+      <th>Category</th>
+      <th>Expense</th>
+    </tr>
+    {% for cat_detail in cat_details %}
+    <tr>
+      <td>{{ cat_detail.category }}</td>
+      <td>{{ cat_detail.expense }}</td>
+    </tr>
+    {% endfor %}
+  </table>
   {% else %}
-    <p>No category details found for the event.</p>
+  <p>No category details found for the event.</p>
   {% endif %}
   
   {% if event_details.status == 0 %}
-    <form method="post" action="{% url 'close_event' event_name=event_details.event_name %}" class="close-button">
-        {% csrf_token %}
-        <button type="submit">Close</button>
-    </form>
-
+  <form method="post" action="{% url 'close_event' event_name=event_details.event_name %}" class="close-button">
+    {% csrf_token %}
+    <button type="submit">Close</button>
+  </form>
   {% elif event_details.status == 1 %}
-    <!-- Send report button -->
-    <form method="post" action="{% url 'send_report' event_name=event_details.event_name %}" class="send-report">
-        {% csrf_token %}
-        <button type="submit">Send Report</button>
-    </form>
-{% endif %}
-
+  <form method="post" action="{% url 'send_report' event_name=event_details.event_name %}" class="send-report">
+    {% csrf_token %}
+    <button type="submit">Send Report</button>
+  </form>
+  {% endif %}
 </div>
 
 </body>

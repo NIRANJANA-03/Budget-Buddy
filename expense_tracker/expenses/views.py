@@ -382,13 +382,14 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from django.views import View
 from xhtml2pdf import pisa
+from itertools import zip_longest
+
 class DownloadPDF(View):
     def get(self, request):
-        # Retrieve selected date from session
-        pdf_export: True
+        # Retrieve the selected date from the session
         selected_date_str = request.session.get('selected_date_str', None)
 
-        if selected_date_str is None:
+        if not selected_date_str:
             return HttpResponse('Date parameter is missing.')
 
         try:
@@ -396,32 +397,39 @@ class DownloadPDF(View):
         except ValueError:
             return HttpResponse('Invalid date format.')
 
+        # Format the date
         formatted_date_str = selected_date.strftime('%B %Y')
         given_date = selected_date.replace(day=1)
+
+        # Retrieve expense details
         expenses = ExpenseDetails.objects.filter(user=request.user, month_year=given_date)
         categories = expenses.values_list('category', flat=True).distinct()
-        expense_amounts = [expenses.filter(category=category).aggregate(total=Sum('cat_expense'))['total'] or 0 for category in categories]
+        expense_amounts = [
+            expenses.filter(category=category).aggregate(total=Sum('cat_expense'))['total'] or 0
+            for category in categories
+        ]
         data = list(zip_longest(categories, expense_amounts, fillvalue=''))
 
-        # Pass data to the HTML template
-        context = {'data': data,'pdf_export': True}
+        # Context for rendering the PDF
+        context = {
+            'data': data,
+            'pdf_export': True,  # Flag for rendering the PDF
+            'selected_date_str': selected_date_str,  # Include the date in the PDF
+        }
 
-        # Render HTML template
+        # Render the HTML template with the context
         template = get_template('chart.html')
         html = template.render(context)
 
-        # Create PDF
+        # Generate PDF response
         response = HttpResponse(content_type='application/pdf')
-
-        # Dynamically set the filename with the selected date
-        filename = f"expense_report of {formatted_date_str}.pdf"
+        filename = f"expense_report_{formatted_date_str}.pdf"
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
 
-        # Generate PDF from HTML content
+        # Convert HTML to PDF
         pisa_status = pisa.CreatePDF(html, dest=response)
-        
         if pisa_status.err:
-            return HttpResponse('Failed to generate PDF')
+            return HttpResponse('Failed to generate PDF', status=500)
 
         return response
 @login_required
