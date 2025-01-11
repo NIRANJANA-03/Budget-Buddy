@@ -101,8 +101,3 @@ Ensure **Python** and **pip** are installed on your system.
 
 ---
 
-## Additional Information
-
-For troubleshooting or further assistance, please contact **Budget Buddy Support** at:  
-**Email**: BudgetBuddysupport@gmail.com  
-**Phone**: +91-876590456
