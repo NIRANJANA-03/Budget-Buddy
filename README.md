@@ -1,103 +1,160 @@
 # Budget Buddy: Expense Tracker
 
-## Project Overview
+## Project Video
 
-Budget Buddy is a comprehensive web-based platform designed to streamline personal financial management. It enables users to monitor expenses, set budgets, plan trips, and organize events effectively. Developed using **Django** for the backend and **HTML**, **CSS**, and **JavaScript** for the frontend, the platform delivers a seamless user experience while ensuring robust data security.
+You can watch the project demo video here: [Budget Buddy Demo](https://youtu.be/i9dByGY2vwY?si=jNMf_adWc5BkgPCq).
 
-### Key Features
+---
 
-- **Expense Tracking**: Organize and track spending across customizable categories.
-- **Tour Planner**: Simplify budgeting for travel expenses.
-- **Event Planner**: Distribute and manage group expenses transparently.
-- **Analytics and Visualization**: Gain insights into spending patterns through detailed charts and reports.
-- **Interactive Visualizations**: JavaScript-powered charts (using Chart.js) provide dynamic and engaging representations of expense data.
+## Overview
+
+I recently started using various budgeting tools, but I noticed that they lacked features for managing group activities like trips or events, which inspired me to design a user-friendly platform with these capabilities integrated. Budget Buddy simplifies personal financial management by offering a seamless way to track expenses, plan trips, and manage group events.
+
+The primary components of Budget Buddy include:
+
+- **Home Page**: Serves as the central hub for accessing key features.
+- **Login/Logout/Register**: Secure user authentication and account management.
+- **Expense Tracker**: Allows users to categorize and track their spending with detailed analytics.
+- **Tour Planner**: Enables users to budget for trips, allocating funds across various categories like transportation and lodging.
+- **Event Planner**: Facilitates group expense management with transparent sharing and reporting.
+- **Dynamic Analytics**: Interactive visualizations powered by Chart.js to monitor and optimize spending patterns.
+
+One standout feature is how remaining money at the end of each month is divided into two parts: half is allocated to savings, and the other half is reserved for the emergency fund. This ensures a balanced approach to financial stability and readiness for unforeseen expenses.
+
+Budget Buddy aims to provide users with a comprehensive toolset for managing their finances, helping them track expenses, plan activities, and improve their financial health. It goes beyond traditional budgeting tools by integrating advanced planning features tailored to modern users' needs.
 
 ---
 
 ## Distinctiveness and Complexity
 
 ### Distinctiveness
+Budget Buddy stands out due to its unique combination of features:
 
-Budget Buddy stands apart from traditional expense tracking systems and projects in its integration of advanced planning features tailored for both individual and group financial activities. Unlike standard budgeting tools:
+- **Integration of Trip and Event Management**: Unlike conventional budgeting tools, Budget Buddy combines expense tracking with robust modules for travel and event planning, making it a holistic financial management solution.
+- **Dynamic and Interactive Design**: Utilizes JavaScript and Chart.js for real-time updates and visually engaging charts, providing users with actionable financial insights.
+- **Mobile-Responsive Design**: Designed to ensure accessibility and usability across various devices.
 
-- It offers specialized modules for event and trip management, enabling users to seamlessly allocate budgets and share expenses in real-time.
-- The combination of these features is absent in existing course projects such as e-commerce or social networking platforms, making this project unique.
+This project is distinct from other CS50 projects as it neither replicates a social media platform nor an e-commerce site, and it incorporates unique financial tools and interactive features.
 
 ### Complexity
+Budget Buddy demonstrates significant complexity through:
 
-The project demonstrates its complexity through:
+1. **Backend Design**:
+   - Utilizes Django ORM to manage multiple models (`User`, `ExpenseDetails`, `TourDetails`, `EventDetails`, etc.).
+   - Implements secure user authentication and robust data handling mechanisms.
+2. **Frontend Interaction**:
+   - JavaScript enables dynamic updates, form validation, and real-time data rendering.
+   - Chart.js generates interactive and customizable visualizations.
+3. **Database Management**:
+   - SQLite efficiently handles complex relationships and queries.
+   - Supports features like real-time updates, custom queries, and user-specific data segregation.
+4. **Modular Architecture**:
+   - Follows clean code separation, ensuring scalability and maintainability.
+5. **Event Dynamics**:
+   - Events automatically deactivate once their duration ends, ensuring real-time updates and accuracy.
+6. **Financial Strategy**:
+   - Implements a thoughtful allocation strategy where leftover funds are split between savings and an emergency fund, promoting financial stability.
 
-- **Multi-faceted Functionality**: The application integrates diverse features (expense tracking, trip planning, and event management) into a cohesive system.
-- **Backend Design**: Django's ORM and SQLite handle intricate data relationships for expenses, budgets, trips, and events.
-- **Frontend Interaction**:
-  - JavaScript enables dynamic updates, form validation, and real-time visualizations without requiring full-page reloads.
-  - Charts (e.g., bar charts and pie charts) are implemented using **Chart.js**, providing a clear and interactive visualization of expense data.
-- **Security**: Robust measures, including user authentication and data encryption, protect sensitive financial information.
-- **Mobile Responsiveness**: A responsive design ensures usability across various devices, meeting modern web application standards.
+These elements collectively showcase a high level of technical sophistication and highlight the innovative solutions implemented to enhance user experience.
 
 ---
 
-## Project Files
+## Files and Directories
 
-### Key Directories and Files
+### Main Project Directory
+- **`.env`**: Contains local environment variables for email credentials and API keys.
+- **`.gitignore`**: Specifies files to be ignored by Git.
+- **`settings.py`**: Custom configuration for timezone, email settings, and media file storage.
+- **`urls.py`**: Defines project-level URLs and settings for media files.
 
-#### **Frontend**
-- `templates/`: Contains HTML templates for different pages, including login, signup, home, and feature-specific pages.
-- `static/`: Includes CSS and JavaScript files for styling, interactivity, and charts (e.g., using Chart.js for data visualization).
+### Application Directory: `expenses`
+- **`static`**:
+  - **`scripts.js`**:
+    - Fetches current and future expenses/events and displays them dynamically.
+    - Handles Google Maps API for location autocomplete.
+    - Validates input for location fields and manages CSRF tokens.
+  - **`styles.css`**: Provides styling for the sports templates, including flexbox and grid layouts.
+- **`templates/sports/`**:
+  - **`index.html`**: Displays the homepage with current, past, and single event views.
+  - **`create_event.html`**: Form for creating a new event with location and budget inputs.
+  - **`layout.html`**: Base template for consistent structure.
+- **`models.py`**:
+  - Defines two primary models:
+    - `User`: Extends Django's `AbstractUser`.
+    - `Event`: Stores details about each event, including many-to-many and foreign key relationships with `User`.
+- **`views.py`**:
+  - Handles core logic, such as creating events, enrolling users, and managing group expenses.
+  - Includes form handling and backend API integration.
 
-#### **Backend**
-- `views.py`: Implements logic for handling user requests.
-- `models.py`: Defines database schema and relationships.
-- `urls.py`: Maps URLs to views.
-- `forms.py`: Handles form data validation.
+### Database
+- **`db.sqlite3`**: SQLite database to store user, event, and financial data securely.
 
-#### **Database**
-- SQLite database to store user, expense, trip, and event data.
-
-#### **Other Files**
-- `requirements.txt`: Lists dependencies for running the project.
-- `README.md`: Documentation for the project.
+### Other Files
+- **`requirements.txt`**: Lists all dependencies required to run the application.
+- **`README.md`**: Comprehensive documentation of the project.
 
 ---
 
 ## How to Run the Application
 
 ### Prerequisites
-
-Ensure **Python** and **pip** are installed on your system.
+- Python 3.x
+- Pip
 
 ### Steps
-
-1. **Clone the repository**:
-
+1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/NIRANJANA-03/Budget-Buddy/
+    git clone https://github.com/me50/NIRANJANA-03/tree/966c41d79cabbb78c363afffd95f2721fdba306d
     cd Budget-Buddy/expense_tracker
     ```
 
-2. **Install dependencies**:
-
+2. **Install Dependencies**:
     ```bash
     pip install -r requirements.txt
     ```
 
-3. **Apply migrations**:
-
+3. **Apply Migrations**:
     ```bash
     python manage.py makemigrations
     python manage.py migrate
     ```
 
-4. **Run the development server**:
-
+4. **Run the Server**:
     ```bash
     python manage.py runserver
     ```
 
-5. **Access the application**:
-
-    Open your web browser and navigate to:  
-    [http://127.0.0.1:8000](http://127.0.0.1:8000)
+5. **Access the Application**:
+    Open your browser and navigate to [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ---
 
+## Additional Information
+
+### Features
+- **Expense Tracking**: Organize expenses across categories and monitor monthly budgets.
+- **Tour Planner**: Budget for travel expenses with detailed category allocations.
+- **Event Planner**: Simplify group expense sharing with automated email reports.
+- **Interactive Visualizations**: Chart.js provides dynamic charts for spending analysis.
+- **Mobile Responsiveness**: Ensures usability across all devices.
+
+### Future Enhancements
+- Integration with external APIs for currency conversion and financial recommendations.
+- AI-based suggestions for budgeting and spending.
+- Advanced reporting with exportable summaries.
+
+---
+
+### Additional Information
+
+#### To see the Visualisation
+- **username**: Rain
+- **password**: Rain
+
+
+#### Also add this in settings for sending the emails
+
+- EMAIL_HOST_USER = 
+- EMAIL_HOST_PASSWORD =
+
+Then the details of event will be send directly to the two person whose details is given 
